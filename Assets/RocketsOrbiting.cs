@@ -113,14 +113,11 @@ public class RocketsOrbiting : MonoBehaviour
 
             if (startVelocity == 0) {
                 startVelocity = (int)uiSliderInitialVelocity.value;
-                Debug.Log(startVelocity);
             }
-            Debug.Log(startVelocity);
             rocketRigidbody.linearVelocity = rocket.transform.right * startVelocity;
 
             rocketFlying = true;
         }
-
         // CalculateOrbitalHeight();
     }
 
@@ -128,8 +125,7 @@ public class RocketsOrbiting : MonoBehaviour
     {
         trajectoryPoints.Add(rocket.transform.position);
 
-        if (trajectoryPoints.Count > 5000)
-        {
+        if (trajectoryPoints.Count > 5000) {
             trajectoryPoints.RemoveAt(0);
         }
 
@@ -140,13 +136,11 @@ public class RocketsOrbiting : MonoBehaviour
 
     void UpdateText()
     {
-        if (uiTextRocketVelocity != null)
-        {
+        if (uiTextRocketVelocity != null) {
             uiTextRocketVelocity.text = $"VELOCITY: {rocketRigidbody.linearVelocity.magnitude:F2}\n";
         }
 
-        if (uiTextRocketOrbitHeight != null)
-        {
+        if (uiTextRocketOrbitHeight != null) {
             float distance = Vector3.Distance(rocket.transform.position, earth.transform.position) - 348 - 50;
             distance = Mathf.Max(distance, 0);
             uiTextRocketOrbitHeight.text = $"DISTANCE TO EARTH: {distance:F2}\n";
@@ -174,10 +168,10 @@ public class RocketsOrbiting : MonoBehaviour
     void CalculateOrbitalHeight()
     {
         float earthMass = earth.GetComponent<Rigidbody>().mass;
-        int EarthRadius = 348;
-        float energyStart = (0.5f * Mathf.Pow(startVelocity, 2)) - (G * earthMass / EarthRadius);
+        int earthRadius = 348;
+        float energyStart = (0.5f * Mathf.Pow(startVelocity, 2)) - (G * earthMass / earthRadius);
         float orbitalRadius = (float)(G * earthMass / (-2 * energyStart));
-        float orbitalHeight = orbitalRadius - EarthRadius;
+        float orbitalHeight = orbitalRadius - earthRadius;
 
         Debug.Log($"Docelowa wysokość orbity: {orbitalHeight:F2}");
     }

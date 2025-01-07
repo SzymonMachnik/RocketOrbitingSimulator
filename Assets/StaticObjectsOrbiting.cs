@@ -13,8 +13,7 @@ public class StaticObjectsOrbiting : MonoBehaviour
 
     void Start() {
         lr = satelite.GetComponent<LineRenderer>();
-        if (lr == null)
-        {
+        if (lr == null) {
             lr = satelite.AddComponent<LineRenderer>();
         }
 
@@ -51,8 +50,7 @@ public class StaticObjectsOrbiting : MonoBehaviour
     {
         trajectoryPoints.Add(satelite.transform.position);
 
-        if (trajectoryPoints.Count > 5000)
-        {
+        if (trajectoryPoints.Count > 5000) {
             trajectoryPoints.RemoveAt(0);
         }
 
