@@ -40,25 +40,42 @@ public class RocketsOrbiting : MonoBehaviour
         lr.material = new Material(Shader.Find("Sprites/Default"));
         lr.positionCount = 0;
 
-        GameObject textObject = GameObject.FindGameObjectWithTag("UiTextRocketVelocity");
-        if (textObject != null) {
-            uiTextRocketVelocity = textObject.GetComponent<TMP_Text>();
+        GameObject gameObject = GameObject.FindGameObjectWithTag("UiTextRocketVelocity");
+        if (gameObject != null) {
+            uiTextRocketVelocity = gameObject.GetComponent<TMP_Text>();
+        } else {
+            Debug.Log("UiTextRocketVelocity not found.");
         }
 
-        textObject = GameObject.FindGameObjectWithTag("UiTextRocketOrbitHeight");
-        if (textObject != null) {
-            uiTextRocketOrbitHeight = textObject.GetComponent<TMP_Text>();
+        gameObject = GameObject.FindGameObjectWithTag("UiTextRocketOrbitHeight");
+        if (gameObject != null) {
+            uiTextRocketOrbitHeight = gameObject.GetComponent<TMP_Text>();
+        } else {
+            Debug.Log("UiTextRocketOrbitHeight not found.");
         }
 
-        GameObject sliderObject = GameObject.FindGameObjectWithTag("UiSliderVelocityChange");
-        uiSliderVelocityChange = sliderObject.GetComponent<Slider>();
+        gameObject = GameObject.FindGameObjectWithTag("UiSliderVelocityChange");
+        if (gameObject != null) {
+            uiSliderVelocityChange = gameObject.GetComponent<Slider>();
+        } else {
+            Debug.Log("UiSliderVelocityChange not found.");
+        }
 
-        textObject = GameObject.FindGameObjectWithTag("UiTextVelocityChangeSliderValue");
-        uiTextVelocityChangeSliderValue = textObject.GetComponent<TMP_Text>();
+        gameObject = GameObject.FindGameObjectWithTag("UiTextVelocityChangeSliderValue");
+        if (gameObject != null) {
+            uiTextVelocityChangeSliderValue = gameObject.GetComponent<TMP_Text>();
+        } else {
+            Debug.Log("UiTextVelocityChangeSliderValue not found.");
+        }
 
-        sliderObject = GameObject.FindGameObjectWithTag("UiSliderInitialVelocity");
-        uiSliderInitialVelocity = sliderObject.GetComponent<Slider>();
-        
+
+        gameObject = GameObject.FindGameObjectWithTag("UiSliderInitialVelocity");
+        if (gameObject != null) {
+            uiSliderInitialVelocity = gameObject.GetComponent<Slider>();
+        } else {
+            Debug.Log("UiSliderInitialVelocity not found.");
+        }
+
     }
 
     void FixedUpdate() 
@@ -120,13 +137,6 @@ public class RocketsOrbiting : MonoBehaviour
         lr.SetPositions(trajectoryPoints.ToArray());
     }
 
-    void HandleInput() 
-    {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            rocketRigidbody.linearVelocity += rocketRigidbody.linearVelocity.normalized * 10f;
-        }
-    }
 
     void UpdateText()
     {
@@ -165,52 +175,35 @@ public class RocketsOrbiting : MonoBehaviour
     {
         float earthMass = earth.GetComponent<Rigidbody>().mass;
         int EarthRadius = 348;
-        // Energia początkowa rakiety
         float energyStart = (0.5f * Mathf.Pow(startVelocity, 2)) - (G * earthMass / EarthRadius);
-
-        // Promień docelowej orbity
         float orbitalRadius = (float)(G * earthMass / (-2 * energyStart));
-
-        // Wysokość nad powierzchnią Ziemi
         float orbitalHeight = orbitalRadius - EarthRadius;
 
-        // Wyświetlenie wyniku
         Debug.Log($"Docelowa wysokość orbity: {orbitalHeight:F2}");
     }
 
-void BoostRocketAfterStart() {
-    if (rocket.transform.position.z < 0) {
-        // Aktualny promień orbity
-        float rCurrent = Vector3.Distance(rocket.transform.position, earth.transform.position);
+    void BoostRocketAfterStart() {
+        if (rocket.transform.position.z < 0) {
+            float rCurrent = Vector3.Distance(rocket.transform.position, earth.transform.position);
+            float earthMass = earth.GetComponent<Rigidbody>().mass;
+            float vOrbit = Mathf.Sqrt(G * earthMass / rCurrent);
+            float vCurrent = rocketRigidbody.linearVelocity.magnitude;
+            float deltaV = vOrbit - vCurrent;
 
-        // Masa Ziemi
-        float earthMass = earth.GetComponent<Rigidbody>().mass;
+            rocketRigidbody.linearVelocity += rocketRigidbody.linearVelocity.normalized * deltaV;
 
-        // Oblicz docelową prędkość orbitalną
-        float vOrbit = Mathf.Sqrt(G * earthMass / rCurrent);
+            Debug.Log($"Boosted! vOrbit: {vOrbit:F2}, vCurrent: {vCurrent:F2}, deltaV: {deltaV:F2}");
 
-        // Aktualna prędkość rakiety
-        float vCurrent = rocketRigidbody.linearVelocity.magnitude;
-
-        // Oblicz różnicę prędkości (deltaV)
-        float deltaV = vOrbit - vCurrent;
-
-        // Zastosuj deltaV jako boost w kierunku aktualnego wektora prędkości
-        rocketRigidbody.linearVelocity += rocketRigidbody.linearVelocity.normalized * deltaV;
-
-        Debug.Log($"Boosted! vOrbit: {vOrbit:F2}, vCurrent: {vCurrent:F2}, deltaV: {deltaV:F2}");
-
-        // Ustaw flagę
-        isRocketBoostedAfterStart = true;
+            isRocketBoostedAfterStart = true;
+        }
     }
-}
 
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject == earth && rocketFlying) 
         {
-            rocketRigidbody.linearVelocity = Vector3.zero;  // Wyzerowanie prędkości
-            rocketRigidbody.angularVelocity = Vector3.zero; // Wyzerowanie momentu pędu
+            rocketRigidbody.linearVelocity = Vector3.zero;
+            rocketRigidbody.angularVelocity = Vector3.zero;
 
             rocketRigidbody.isKinematic = true;
 
