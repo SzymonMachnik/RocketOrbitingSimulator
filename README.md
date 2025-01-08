@@ -4,8 +4,10 @@ A simulator designed to model rocket movement within the framework of orbital me
 
 ## 🛠️ How it works? (Explanation from physics point of view)
 ### Moving on orbit
+The image illustrates the forces acting on a rocket in Earth's orbit. The red vector 𝐹𝐺 represents the gravitational force pulling the rocket toward the Earth, while the blue vector 𝑉𝑅 indicates the rocket's velocity tangent to its orbital path. The combined interaction of these, well balanced, forces results in the stable orbital motion depicted by the circular trajectory around the Earth.
 
 ### Speed up to go slower, slow down to faster?
+As we see in the image above, if we use engines distance to Earth will increase, but rocket velocity decrease.
 
 ## 💻 Tech Stack
 ### Programming language:
