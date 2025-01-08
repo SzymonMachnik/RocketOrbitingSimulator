@@ -4,7 +4,7 @@
 A simulator designed to model rocket movement within the framework of orbital mechanics. Built using the Unity game engine, it provides accurate visualizations and calculations of rocket trajectories by implementing the true laws of physics governing motion in space. This project leverages the power of C# and Unity to create an interactive experience for users.
 
 ## 🌐 Website
-Try my project on this website: https://szymonmachnik.itch.io/rocket-orbiting-simulator!
+Try my project online on this website: https://szymonmachnik.itch.io/rocket-orbiting-simulator!
 
 ## 🛠️ How it works? (Explanation from physics point of view)
 ### Moving on orbit
