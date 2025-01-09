@@ -20,3 +20,11 @@ As we see in the image above, if we use engines distance to Earth will increase,
   - C#.
 ### Engine:
   - Unity 6.
+
+## 📒 To-Do
+### - Add a graphical effect when the engines are used.
+### - Add orbit inclination.
+### - Add transfers that let the user to change orbit inclination.
+
+## 📘 Last update
+### 30.12.2024 - Added two additional cameras.
