@@ -3,7 +3,7 @@
 ## 🧭 Navigation
 * [📃 Brief description](#-brief-description)
 * [🌐 Website](#-website)
-* [🛠️ How it works? Explanation from physics point of view](#-how-it-works-explanation-from-physics-point-of-view)
+* [🛠️ How it works? Explanation from physics point of view](#%EF%B8%8F-how-it-works-explanation-from-physics-point-of-view)
 * [💻 Tech Stack](#-tech-stack)
 * [📒 To-Do](#-to-do)
 * [📘 Last update](#-last-update)
